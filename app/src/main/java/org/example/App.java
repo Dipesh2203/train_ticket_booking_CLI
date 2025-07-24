@@ -77,11 +77,11 @@ public class App {
                     }
                     break;
                 case 2: //option   // block login
-//                    System.out.println("Enter your userName: ");
-//                    String LoginUserName = input.next();
-//                    System.out.println("Enter your password: ");
-//                    String LoginPassword = input.next();
-//                    user = new User(LoginUserName, LoginPassword);
+                    System.out.println("Enter your userName: ");
+                    String LoginUserName = input.next();
+                    System.out.println("Enter your password: ");
+                    String LoginPassword = input.next();
+                    user = new User(LoginUserName, LoginPassword);
                     user = new User("12345", "12345");
                     try {
                         //userService = new UserService(user);
@@ -102,11 +102,11 @@ public class App {
 
                             switch(option_after_login){         // block search train
                                 case 1: //option_after_login
-//                                    System.out.println("Enter source station: ");
-//                                    String source = input.next();
-//                                    System.out.println("Enter destination : ");
-//                                    String destination = input.next();
-//                                    List<Trains> train = trainService.searchTrains(user,source,destination);
+                                    System.out.println("Enter source station: ");
+                                    String source = input.next();
+                                    System.out.println("Enter destination : ");
+                                    String destination = input.next();
+                                    List<Trains> train = trainService.searchTrains(user,source,destination);
                                     List<Trains> train = trainService.searchTrains(user,"madhepura","saharsa");
                                     AtomicInteger index = new AtomicInteger(1);
                                     train.forEach(t ->System.out.printf(index.getAndIncrement() + "."  + """                                                                                                                   
