@@ -1,28 +1,18 @@
-# Ignore Gradle project-specific cache directory
-.gradle
+# ---------------------------------------
+# Java + Gradle Project .gitignore
+# ---------------------------------------
 
-# Ignore Gradle build output directory
-build
-# Compiled class files
-*.class
+# === Gradle-specific ===
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+gradle-app.setting
 
-# Log files
-*.log
+# Gradle Wrapper scripts
+gradlew
+gradlew.bat
 
-# BlueJ files
-*.ctxt
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files #
-*.jar
-*.war
-*.ear
-
-# Virtual machine crash logs
-hs_err_pid*
-
+# === IDEs ===
 # IntelliJ IDEA
 .idea/
 *.iml
@@ -30,14 +20,40 @@ hs_err_pid*
 out/
 
 # Eclipse
-.classpath
 .project
+.classpath
 .settings/
-bin/
 
 # VS Code
 .vscode/
 
-# OS-specific
+# NetBeans
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+# === OS/system files ===
 .DS_Store
 Thumbs.db
+
+# === Logs and temp files ===
+*.log
+*.tmp
+*.swp
+*.swo
+
+# === Java build artifacts ===
+*.class
+*.jar
+*.war
+*.ear
+
+# === Crash logs ===
+hs_err_pid*
+
+# === Environment files ===
+.env
+*.env
