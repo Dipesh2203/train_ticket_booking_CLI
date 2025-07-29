@@ -83,8 +83,9 @@ public class TrainService {
         return result;
     }
 
-    public List<Trains> fetchTrain(String trainId){
-        return trainList.stream().filter(train ->trainId.equals(train.getTrainId())).collect(Collectors.toList());
+    public Trains fetchTrain(String trainId){
+        Trains train = trainList.stream().filter(e ->trainId.equals(e.getTrainId())).collect(Collectors.toList()).get(0);
+        return train;
     }
 
 

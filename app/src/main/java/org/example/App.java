@@ -22,7 +22,8 @@ public class App {
     // done : auto assign unique id
     // done : add trains in json file using object mapper
     // done : search train should give list of station and time
-    // todo : calculating total no. of seats
+    // done : calculating total no. of seats
+    // done : displaying seats layout
     // todo : book tickets
     // todo : Cancel my Booking
     // todo : don't add existing user
@@ -40,11 +41,7 @@ public class App {
             throw new RuntimeException(e);
         }
 
-        List<List<String>> seats = new ArrayList<>(List.of(List.of("""
-                [0,0,0,0,0,0],\s
-                [0,0,0,0,0,0],\s
-                [0,0,0,0,0,0],\s
-                [0,0,0,0,0,0]""")));
+
         try{
         userService = new UserService(); } catch (IOException e) {
             throw new RuntimeException(e);
@@ -58,9 +55,10 @@ public class App {
                                 3. admin dashboard\s
                                 4. To exit app\s""");
             System.out.println("choose options to work upon : ");
-            option = input.nextInt();
+//            option = input.nextInt();
+            option = 2;
 
-            switch (option) { // block signup
+            switch (2) { // block signup
                 case 1: //option
                     System.out.println("Enter your name: ");
                     String name = input.next();
@@ -98,9 +96,10 @@ public class App {
                                     3. To logout\s
                                     """);
                             System.out.println("choose options to work upon : ");
-                            option_after_login = input.nextInt();
+                            option_after_login = 1;
+//                            option_after_login = input.nextInt();
 
-                            switch(option_after_login){         // block search train
+                            switch(1){         // block search train
                                 case 1: //option_after_login
                                     System.out.println("Enter source station: ");
                                     String source = input.next();
@@ -116,20 +115,22 @@ public class App {
                                                                 // block fetch train
                                         System.out.println("Choose option from list shown in searches : ");
                                         int list = input.nextInt();
-                                        List<Trains> fetchedTrain = trainService.fetchTrain(train.get(list-1).getTrainId());
+                                        Trains fetchedTrain = trainService.fetchTrain(train.get(list-1).getTrainId());
+                                        System.out.println(fetchedTrain.getTrainNo());
 
-                                        // todo calculation total no of seats.  hint:
-                                        //// list -> object -> list -> list -> element
-                                    //
-                                    ///* for(e: train ){
-                                    //	e.getTrainId();
-                                    //	List<List<String>> seats = e.getSeats();
-                                    //	int totalSeats = seats.get(0).get(0) == "0" ? count++;
-                                    //}
-                                    //list.stream().filter().collect(Collectors.toList();
+                                        //List<List<String>> seats = fetchedTrain.get(0).getSeats();
+//                                        fetchedTrain.forEach(e ->System.out.printf("your are booking train %s from %s to %s and total available seats %d ",e.getTrainNo(),e.getStations().get(0),e.getStations().get(e.getStations().size()-1),seats.stream()
+//                                                .flatMap(List::stream)
+//                                                .filter(seat -> seat.equals("0"))
+//                                                .count()));
 
-                                        fetchedTrain.forEach(e ->System.out.printf("your are booking train %s from %s to %s and total available seats %s ",e.getTrainNo(),e.getStations().get(0),e.getStations().get(e.getStations().size()-1),e.getSeats().get(0) ));
-                                                //== "0" ? "count++" : "0"));
+                                        System.out.println();
+
+
+
+
+
+
                                     break;
                                 case 2: //option_after_login // block logout
                                     break;
@@ -156,6 +157,13 @@ public class App {
                                 String stationDetails = input.next();
                                 System.out.println("Enter train no. : ");
                                 String trainNo = input.next();
+                                List<List<String>> seats = new ArrayList<>(
+                                        List.of(
+                                                List.of("0", "0", "0", "0", "0", "0"),
+                                                List.of("0", "0", "0", "0", "0", "0"),
+                                                List.of("0", "0", "0", "0", "0", "0")
+                                        )
+                                );
 
                                 try{
                                     trainService.addTrains(stationDetails,seats,trainNo);
