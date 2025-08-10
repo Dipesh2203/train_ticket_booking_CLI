@@ -107,7 +107,7 @@ public class App {
                                     System.out.println("Enter destination : ");
                                     String destination = input.next();
                                     List<Trains> train = trainService.searchTrains(user,source,destination);
-//                                    List<Trains> train = trainService.searchTrains(user,"madhepura","saharsa");
+                                    List<Trains> train = trainService.searchTrains(user,"madhepura","saharsa");
                                     AtomicInteger index = new AtomicInteger(1);
                                     train.forEach(t ->System.out.printf(index.getAndIncrement() + "."  + """                                                                                                                   
                                             train no. %s
