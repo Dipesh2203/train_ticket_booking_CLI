@@ -24,7 +24,7 @@ public class TrainService {
 //    public TrainService(User user) throws IOException{
 //        loadTrainsFile();
 //        this.user = user;
-//        System.out.println(user.getName());  // todo fix here null is printing (hint: user contain only username and password)
+//        System.out.println(user.getName());  // todo fix here null is printing
 //    }
 
     public TrainService(Trains trains) throws IOException{
@@ -43,7 +43,7 @@ public class TrainService {
 
 
     public List<Trains> searchTrains(User LoginUser,String source,String destination){
-        System.out.println(LoginUser.getName() + "is searching for trains"); // todo fix here null is printing (hint: user contain only username and password)
+        System.out.println(LoginUser.getName() + "is searching for trains"); // todo fix here null is printing
         return trainList.stream().filter(train ->isTrainAvailable(train,source,destination)).collect(Collectors.toList());
     }
 
@@ -83,9 +83,8 @@ public class TrainService {
         return result;
     }
 
-    public Trains fetchTrain(String trainId){
-        Trains train = trainList.stream().filter(e ->trainId.equals(e.getTrainId())).collect(Collectors.toList()).get(0);
-        return train;
+    public List<Trains> fetchTrain(String trainId){
+        return trainList.stream().filter(train ->trainId.equals(train.getTrainId())).collect(Collectors.toList());
     }
 
 
