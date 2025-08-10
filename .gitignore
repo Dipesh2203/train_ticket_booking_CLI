@@ -57,3 +57,4 @@ hs_err_pid*
 # === Environment files ===
 .env
 *.env
+.json
