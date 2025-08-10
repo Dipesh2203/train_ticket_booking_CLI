@@ -26,6 +26,7 @@ public class App {
     // done : displaying seats layout
     // done : book tickets
     // todo : update seats
+    // todo : admin inputmismatch exception handling
     // todo : Cancel my Booking
 
 
@@ -57,10 +58,10 @@ public class App {
                                 3. admin dashboard\s
                                 4. To exit app\s""");
             System.out.println("choose options to work upon : ");
-//            option = input.nextInt();
-            option = 2;
+            option = input.nextInt();
+//            option = 2;
 
-            switch (2) { // block signup
+            switch (option) { // block signup
                 case 1: //option
                     System.out.println("Enter your name: ");
                     String name = input.next();
@@ -91,7 +92,7 @@ public class App {
                     }
 
                     int option_after_login = 0;
-                        while(option_after_login != 2){     // block menu after login
+                        while(option_after_login != 3){     // block menu after login
                             System.out.println("""
                                     1. search trains\s
                                     2. Book tickets\s
@@ -101,8 +102,8 @@ public class App {
 //                            option_after_login = 1;
                             option_after_login = input.nextInt();
 
-                            switch(1){         // block search train
-                                case 1: //option_after_login
+                            switch(option_after_login){         // block search train
+                                case 1 , 2 ://option_after_login
                                     System.out.println("Enter source station: ");
                                     String source = input.next();
                                     System.out.println("Enter destination : ");
@@ -118,17 +119,17 @@ public class App {
                                                                 // block fetch train
                                     System.out.println("Choose option from list shown in searches : ");
                                     int list = input.nextInt();
-                                    Trains fetchedTrain = trainService.fetchTrain(train.get(list-1).getTrainId());
+                                    List<Trains> fetchedTrain = trainService.fetchTrain(train.get(list-1).getTrainId());
 
-                                    String fetchedTrainNo = fetchedTrain.getTrainNo();
-                                    String fetchedTrainFirstStation = fetchedTrain.getStations().getFirst();
-                                    String fetchedTrainLastStation = fetchedTrain.getStations().getLast();
-                                    long fetchedTrainTotalSeatsAvailable = fetchedTrain.getSeats().stream().flatMap(List::stream).filter(seat -> seat.equals("0")).count();
+                                    String fetchedTrainNo = fetchedTrain.getFirst().getTrainNo();
+                                    String fetchedTrainFirstStation = fetchedTrain.getFirst().getStations().getFirst();
+                                    String fetchedTrainLastStation = fetchedTrain.getFirst().getStations().getLast();
+                                    long fetchedTrainTotalSeatsAvailable = fetchedTrain.getFirst().getSeats().stream().flatMap(List::stream).filter(seat -> seat.equals("0")).count();
                                     System.out.printf("You are booking train %s from %s to %s and total available seats are %d. \n",
                                             fetchedTrainNo,fetchedTrainFirstStation,fetchedTrainLastStation,fetchedTrainTotalSeatsAvailable);
 
                                     System.out.println("Available seats are: ");
-                                    List<List<String>> seats = fetchedTrain.getSeats();
+                                    List<List<String>> seats = fetchedTrain.getFirst().getSeats();
                                     record Position(int x, int y) {}
                                     Map<Position,Integer> seatMap = new HashMap<>();
                                     for(int i = 0 ; i < seats.size();i++){
@@ -171,7 +172,7 @@ public class App {
 
 
                                     break;
-                                case 2: //option_after_login // block logout
+                                case 3: //option_after_login // block logout
                                     break;
                                 default:
                                     System.out.println("you should not enter other than the provided options.");
