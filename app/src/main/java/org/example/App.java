@@ -57,10 +57,10 @@ public class App {
                                 3. admin dashboard\s
                                 4. To exit app\s""");
             System.out.println("choose options to work upon : ");
-//            option = input.nextInt();
-            option = 2;
+            option = input.nextInt();
+//            option = 2;
 
-            switch (2) { // block signup
+            switch (option) { // block signup
                 case 1: //option
                     System.out.println("Enter your name: ");
                     String name = input.next();
@@ -91,7 +91,7 @@ public class App {
                     }
 
                     int option_after_login = 0;
-                        while(option_after_login != 2){     // block menu after login
+                        while(option_after_login != 3){     // block menu after login
                             System.out.println("""
                                     1. search trains\s
                                     2. Book tickets\s
@@ -101,7 +101,7 @@ public class App {
 //                            option_after_login = 1;
                             option_after_login = input.nextInt();
 
-                            switch(1){         // block search train
+                            switch(option_after_login){         // block search train
                                 case 1: //option_after_login
                                     System.out.println("Enter source station: ");
                                     String source = input.next();
