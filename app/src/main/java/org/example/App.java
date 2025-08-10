@@ -58,9 +58,11 @@ public class App {
                                 3. admin dashboard\s
                                 4. To exit app\s""");
             System.out.println("choose options to work upon : ");
-            option = input.nextInt();
 
-            switch (option) { // block signup
+//            option = input.nextInt();
+            option = 2;
+
+            switch (2) { // block signup
                 case 1: //option
                     System.out.println("Enter your name: ");
                     String name = input.next();
@@ -100,7 +102,7 @@ public class App {
                             System.out.println("choose options to work upon : ");
                             option_after_login = input.nextInt();
 
-                            switch(option_after_login){         // block search train
+                            switch(1){         // block search train
                                 case 1: //option_after_login
                                     System.out.println("Enter source station: ");
                                     String source = input.next();
