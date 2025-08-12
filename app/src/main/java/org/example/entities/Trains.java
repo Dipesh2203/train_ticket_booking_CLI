@@ -1,14 +1,15 @@
 package org.example.entities;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.ArrayList;
+import java.util.*;
 
 public class Trains {
     private String trainId;
     private Map<String,String> stationTime;
-    private List<List<String>> seats;
+
+//    public record Position(int x, int y) {}
+//    Map<Position,Integer> seatMap = new HashMap<>();
+
+    private HashMap<String,Integer> seats;
     private String trainNo;
     private List<String> stations ;
 //    private User user;
@@ -18,7 +19,7 @@ public class Trains {
 
     }
 
-    public Trains(  String trainId, List<String> stations, Map<String, String> stationTime, List<List<String>> seats, String trainNo) {
+    public Trains(  String trainId, List<String> stations, Map<String, String> stationTime, HashMap<String,Integer> seats, String trainNo) {
         this.trainId = trainId;
         this.stations = stations;
         this.stationTime = stationTime;
@@ -50,11 +51,11 @@ public class Trains {
         this.stationTime = stationTime;
     }
 
-    public List<List<String>> getSeats() {
+    public HashMap<String,Integer> getSeats() {
         return seats;
     }
 
-    public void setSeats(List<List<String>> seats) {
+    public void setSeats(HashMap<String,Integer> seats) {
         this.seats = seats;
     }
 
