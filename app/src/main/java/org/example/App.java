@@ -25,13 +25,13 @@ public class App {
     // done : calculating total no. of seats
     // done : displaying seats layout
     // done : book tickets
-    // todo : update seats
+    // done : update seats
     // todo : admin inputmismatch exception handling
     // todo : Cancel my Booking
 
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         UserService userService ;
         System.out.println("App started!");
         Scanner input = new Scanner(System.in);
@@ -117,59 +117,39 @@ public class App {
                                             """, t.getTrainNo() ,t.getStationTime()));
 
                                                                 // block fetch train
-//                                    System.out.println("Choose option from list shown in searches : ");
-//                                    int list = input.nextInt();
-//                                    List<Trains> fetchedTrain = trainService.fetchTrain(train.get(list-1).getTrainId());
-//
-//                                    String fetchedTrainNo = fetchedTrain.getFirst().getTrainNo();
-//                                    String fetchedTrainFirstStation = fetchedTrain.getFirst().getStations().getFirst();
-//                                    String fetchedTrainLastStation = fetchedTrain.getFirst().getStations().getLast();
-//                                    long fetchedTrainTotalSeatsAvailable = fetchedTrain.getFirst().getSeats().stream().flatMap(List::stream).filter(seat -> seat.equals("0")).count();
-//                                    System.out.printf("You are booking train %s from %s to %s and total available seats are %d. \n",
-//                                            fetchedTrainNo,fetchedTrainFirstStation,fetchedTrainLastStation,fetchedTrainTotalSeatsAvailable);
-//
-//                                    System.out.println("Available seats are: ");
-//                                    List<List<String>> seats = fetchedTrain.getFirst().getSeats();
-//                                    record Position(int x, int y) {}
-//                                    Map<Position,Integer> seatMap = new HashMap<>();
-//                                    for(int i = 0 ; i < seats.size();i++){
-//                                        for(int j = 0 ; j < seats.get(i).size() ; j++){
-//                                            if(!seatMap.containsKey(new Position(i,j))){
-//                                                System.out.print(i + "" + j + " ");
-//                                                seatMap.put(new Position(i,j) ,0);
-//                                            }else if (seatMap.get(new Position(i,j)) == 1){
-//                                                System.out.print("NA");
-//
-//                                            }
-//
-//                                        }System.out.println();
-//                                    }
-//                                    System.out.println();
+                                    System.out.println("Choose option from list shown in searches : ");
+                                    int list = input.nextInt();
+                                    Trains fetchedTrain = trainService.fetchTrain(train.get(list-1).getTrainId());
+
+                                    String fetchedTrainNo = fetchedTrain.getTrainNo();
+                                    String fetchedTrainFirstStation = fetchedTrain.getStations().getFirst();
+                                    String fetchedTrainLastStation = fetchedTrain.getStations().getLast();
+
+                                    long fetchedTrainTotalSeatsAvailable = fetchedTrain.getSeats().values().stream().filter(seat -> seat == 0).count();
+
+                                    System.out.printf("You are booking train %s from %s to %s and total available seats are %d. \n",
+                                            fetchedTrainNo,fetchedTrainFirstStation,fetchedTrainLastStation,fetchedTrainTotalSeatsAvailable);
+
+                                    System.out.println("Available seats are: ");
+                                    HashMap<String,Integer> seatMap = fetchedTrain.getSeats();
+
+                                    for(Map.Entry<String ,Integer> entry: seatMap.entrySet()){
+                                        if(entry.getValue() != 1) {
+                                            System.out.print(entry.getKey());
+                                            System.out.print("  ");
+                                        }
+                                    }System.out.println();
+
 
                                                             // block seats booking by user
-//                                    System.out.println("Select seats no from available seats: ");
-//                                    int seatInput = input.nextInt();
-//                                    int x = seatInput / 10;
-//                                    int y = seatInput % 10;
-//                                    if(seatMap.containsKey(new Position(x,y))) {
-//                                        seatMap.put(new Position(x,y),1);
-//                                    }
-//                                    else System.out.println("Please enter seat no from given layout!");
-//
-//                                    for(int i = 0 ; i < seats.size();i++){
-//                                        for(int j = 0 ; j < seats.get(i).size() ; j++){
-//                                            if(!seatMap.containsKey(new Position(i,j)) || seatMap.get(new Position(i,j)) != 1){
-//                                                System.out.print(i + "" + j + " ");
-//                                                seatMap.put(new Position(i,j) ,0);
-//                                            }else if (seatMap.get(new Position(i,j)) == 1){
-//                                                System.out.print("NA" + " ");
-//                                            }
-//
-//                                        }System.out.println();
-//                                    }
-//                                    System.out.println();
-
-
+                                    System.out.println("Select seats no from available seats: ");
+                                    input.nextLine();
+                                    String seatInput = input.nextLine();
+                                    if(seatMap.containsKey(seatInput) && seatMap.get(seatInput) != 1) {
+                                        trainService.updateTrain(fetchedTrain.getTrainId(),seatInput);
+                                        seatMap.put(seatInput,1);
+                                    }
+                                    else System.out.println("Please enter seat no from given layout!");
 
                                     break;
                                 case 3: //option_after_login // block logout

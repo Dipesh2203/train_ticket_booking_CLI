@@ -48,6 +48,7 @@ public class TrainService {
         return trainList.stream().filter(train ->isTrainAvailable(train,source,destination)).collect(Collectors.toList());
     }
 
+
     public boolean isTrainAvailable(Trains trains,String source,String destination){
         int sourceIndex = trains.getStations().indexOf(source.toLowerCase());
         int destinationIndex = trains.getStations().indexOf(destination.toLowerCase());
@@ -84,8 +85,18 @@ public class TrainService {
         return result;
     }
 
-    public List<Trains> fetchTrain(String trainId){
-        return trainList.stream().filter(train ->trainId.equals(train.getTrainId())).collect(Collectors.toList());
+    public Trains fetchTrain(String trainId){
+        List<Trains> a = trainList.stream().filter(train ->trainId.equals(train.getTrainId())).collect(Collectors.toList());
+        return a.getFirst();
+    }
+
+    public void updateTrain(String trainId ,String seatInput) throws IOException{
+        loadTrainsFile();
+        ObjectMapper objectMapper = new ObjectMapper();
+        trainList.stream().filter(train -> train.getTrainId().equals(trainId)).findAny().ifPresent(train->train.getSeats().put(seatInput,1));
+        File trainFile = new File(PATH_TO_TRAINSFILE);
+        objectMapper.writeValue(trainFile,trainList);
+        System.out.println(trainId + "updated");
     }
 
 
