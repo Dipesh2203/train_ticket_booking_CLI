@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.entities.Trains;
+//import org.example.entities.Trains.Position;
 import org.example.entities.User;
 
 import java.io.IOException;
@@ -20,7 +21,7 @@ public class TrainService {
     private List<Trains> trainList;
     private static final String PATH_TO_TRAINSFILE = "app/src/main/java/org/example/localDb/trains.json";
     private User user;
-
+//    private record Position(int x , int y){};
 //    public TrainService(User user) throws IOException{
 //        loadTrainsFile();
 //        this.user = user;
@@ -47,13 +48,14 @@ public class TrainService {
         return trainList.stream().filter(train ->isTrainAvailable(train,source,destination)).collect(Collectors.toList());
     }
 
+
     public boolean isTrainAvailable(Trains trains,String source,String destination){
         int sourceIndex = trains.getStations().indexOf(source.toLowerCase());
         int destinationIndex = trains.getStations().indexOf(destination.toLowerCase());
         return sourceIndex != -1 && destinationIndex != -1 && sourceIndex < destinationIndex;
     }
 
-    public void addTrains(String stationDetails,List<List<String>> seats,String trainNo) throws IOException {
+    public void addTrains(String stationDetails, HashMap<String,Integer> seats, String trainNo) throws IOException {
         List<Object> station = refineStationDetails(stationDetails);
         LinkedHashMap<String,String> station1 =(LinkedHashMap<String,String>)station.get(1);
         Trains train = new Trains(UUID.randomUUID().toString(),(List<String>)station.getFirst(), station1,seats,trainNo);
@@ -83,8 +85,18 @@ public class TrainService {
         return result;
     }
 
-    public List<Trains> fetchTrain(String trainId){
-        return trainList.stream().filter(train ->trainId.equals(train.getTrainId())).collect(Collectors.toList());
+    public Trains fetchTrain(String trainId){
+        List<Trains> a = trainList.stream().filter(train ->trainId.equals(train.getTrainId())).collect(Collectors.toList());
+        return a.getFirst();
+    }
+
+    public void updateTrain(String trainId ,String seatInput) throws IOException{
+        loadTrainsFile();
+        ObjectMapper objectMapper = new ObjectMapper();
+        trainList.stream().filter(train -> train.getTrainId().equals(trainId)).findAny().ifPresent(train->train.getSeats().put(seatInput,1));
+        File trainFile = new File(PATH_TO_TRAINSFILE);
+        objectMapper.writeValue(trainFile,trainList);
+        System.out.println(trainId + "updated");
     }
 
 
